@@ -92,7 +92,7 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       String username = UsernameForm.getText().trim();
+        String username = UsernameForm.getText().trim();
         String password = PasswordForm.getText().trim();
 
         if (username.isEmpty() || password.isEmpty()) {
@@ -101,37 +101,20 @@ public class Login extends javax.swing.JFrame {
             return;
         }
 
-        String url = "jdbc:mysql://localhost:3306/stokberas";
-        String dbUser = "root";
-        String dbPassword = "";
-
-        String sql = "SELECT * FROM pengguna WHERE username = ? AND password = ?";
-
         try {
-            java.sql.Connection conn = java.sql.DriverManager.getConnection(
-                    url, dbUser, dbPassword);
+            com.beras.stokberas.entity.Pengguna pengguna
+                    = new com.beras.stokberas.service.StokService().login(username, password);
 
-            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
-
-            pst.setString(1, username);
-            pst.setString(2, password);
-
-            java.sql.ResultSet rs = pst.executeQuery();
-
-            if (rs.next()) {
-                javax.swing.JOptionPane.showMessageDialog(this,
-                        "Login berhasil! Selamat Datang, " + username);
-
+            if (pengguna != null) {
+                com.beras.stokberas.ui.MenuUtama menu
+                        = new com.beras.stokberas.ui.MenuUtama(pengguna.getUsername());
+                menu.setVisible(true);
+                dispose();
             } else {
                 javax.swing.JOptionPane.showMessageDialog(this,
                         "Username atau password salah!");
             }
-
-            rs.close();
-            pst.close();
-            conn.close();
-
-        } catch (java.sql.SQLException e) {
+        } catch (RuntimeException e) {
             javax.swing.JOptionPane.showMessageDialog(this,
                     "Koneksi database gagal: " + e.getMessage());
         }
