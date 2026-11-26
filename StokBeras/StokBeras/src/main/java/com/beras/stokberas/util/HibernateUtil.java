@@ -5,23 +5,15 @@ import org.hibernate.cfg.Configuration;
 
 public final class HibernateUtil {
 
-    private static SessionFactory sessionFactory;
+    private static SessionFactory factory;
 
     private HibernateUtil() {
     }
 
-    /** Dibuat saat pertama kali dipakai, sehingga error koneksi bisa ditangkap di UI. */
     public static synchronized SessionFactory getSessionFactory() {
-        if (sessionFactory == null) {
-            sessionFactory = new Configuration().configure().buildSessionFactory();
+        if (factory == null) {
+            factory = new Configuration().configure().buildSessionFactory();
         }
-        return sessionFactory;
-    }
-
-    public static synchronized void shutdown() {
-        if (sessionFactory != null) {
-            sessionFactory.close();
-            sessionFactory = null;
-        }
+        return factory;
     }
 }

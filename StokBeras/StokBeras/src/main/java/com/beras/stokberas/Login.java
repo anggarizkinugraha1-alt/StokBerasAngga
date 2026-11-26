@@ -101,14 +101,17 @@ public class Login extends javax.swing.JFrame {
             return;
         }
 
-        try {
-            com.beras.stokberas.entity.Pengguna pengguna
-                    = new com.beras.stokberas.service.StokService().login(username, password);
+        try (org.hibernate.Session session
+                = com.beras.stokberas.util.HibernateUtil.getSessionFactory().openSession()) {
+            boolean cocok = session.createQuery(
+                    "from Pengguna where username = :u and password = :p",
+                    com.beras.stokberas.entity.Pengguna.class)
+                    .setParameter("u", username)
+                    .setParameter("p", password)
+                    .uniqueResult() != null;
 
-            if (pengguna != null) {
-                com.beras.stokberas.ui.MenuUtama menu
-                        = new com.beras.stokberas.ui.MenuUtama(pengguna.getUsername());
-                menu.setVisible(true);
+            if (cocok) {
+                new MenuUtama(username).setVisible(true);
                 dispose();
             } else {
                 javax.swing.JOptionPane.showMessageDialog(this,

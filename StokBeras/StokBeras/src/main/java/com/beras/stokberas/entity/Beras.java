@@ -40,7 +40,7 @@ public class Beras {
     }
 
     public String getNama() {
-        return nama;
+        return nama + " (stok " + stok + " kg)";
     }
 
     public void setNama(String nama) {
@@ -65,6 +65,6 @@ public class Beras {
 
     @Override
     public String toString() {
-        return nama;
+        return nama + " (stok " + stok + " kg)";
     }
 }
