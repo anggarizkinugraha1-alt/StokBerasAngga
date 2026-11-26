@@ -1,8 +1,8 @@
-package com.beras.manajemenstokberas;
+package com.beras.stokberas;
 
 import javax.swing.SwingUtilities;
 
-public class main {
+public class  main{
 
     public static void main(String[] args) {
 
@@ -10,7 +10,7 @@ public class main {
 
             Login login = new Login();
 
-            login.setTitle("Manajemen Stok Beras - Login");
+            login.setTitle("Stok Beras - Login");
             login.setLocationRelativeTo(null);
             login.setVisible(true);
 
