@@ -16,5 +16,6 @@
 
         <mapping class="com.beras.stokberas.entity.Pengguna"/>
         <mapping class="com.beras.stokberas.entity.Beras"/>
+        <mapping class="com.beras.stokberas.entity.TransaksiStok"/>
     </session-factory>
 </hibernate-configuration>

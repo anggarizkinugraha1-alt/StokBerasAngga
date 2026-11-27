@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="laporan_transaksi" pageWidth="595" pageHeight="842" columnWidth="555"
+              leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20"
+              whenNoDataType="NoDataSection">
+
+    <!-- JUDUL dikirim dari MenuUtama: "LAPORAN BERAS MASUK" / "LAPORAN BERAS KELUAR" -->
+    <parameter name="JUDUL" class="java.lang.String"/>
+
+    <!-- Property di class TransaksiStok: getWaktu, getNamaBeras, getJumlah -->
+    <field name="waktu" class="java.lang.String"/>
+    <field name="namaBeras" class="java.lang.String"/>
+    <field name="jumlah" class="java.lang.Integer"/>
+
+    <variable name="totalJumlah" class="java.lang.Integer" calculation="Sum">
+        <variableExpression><![CDATA[$F{jumlah}]]></variableExpression>
+    </variable>
+
+    <title>
+        <band height="60">
+            <textField>
+                <reportElement x="0" y="0" width="555" height="30"/>
+                <textElement textAlignment="Center">
+                    <font fontName="SansSerif" size="18" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{JUDUL}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="0" y="32" width="555" height="18"/>
+                <textElement textAlignment="Center">
+                    <font fontName="SansSerif" size="10"/>
+                </textElement>
+                <textFieldExpression><![CDATA["Dicetak: " + new java.text.SimpleDateFormat("dd MMMM yyyy, HH:mm").format(new java.util.Date())]]></textFieldExpression>
+            </textField>
+        </band>
+    </title>
+
+    <columnHeader>
+        <band height="25">
+            <staticText>
+                <reportElement x="0" y="0" width="35" height="25"/>
+                <box><pen lineWidth="0.5"/></box>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font fontName="SansSerif" isBold="true"/>
+                </textElement>
+                <text><![CDATA[No]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="35" y="0" width="140" height="25"/>
+                <box><pen lineWidth="0.5"/></box>
+                <textElement verticalAlignment="Middle">
+                    <font fontName="SansSerif" isBold="true"/>
+                </textElement>
+                <text><![CDATA[ Tanggal / Jam]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="175" y="0" width="240" height="25"/>
+                <box><pen lineWidth="0.5"/></box>
+                <textElement verticalAlignment="Middle">
+                    <font fontName="SansSerif" isBold="true"/>
+                </textElement>
+                <text><![CDATA[ Nama Beras]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="415" y="0" width="140" height="25"/>
+                <box><pen lineWidth="0.5"/></box>
+                <textElement textAlignment="Right" verticalAlignment="Middle">
+                    <font fontName="SansSerif" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Jumlah (kg) ]]></text>
+            </staticText>
+        </band>
+    </columnHeader>
+
+    <detail>
+        <band height="22">
+            <textField>
+                <reportElement x="0" y="0" width="35" height="22"/>
+                <box><pen lineWidth="0.5"/></box>
+                <textElement textAlignment="Center" verticalAlignment="Middle"><font fontName="SansSerif"/></textElement>
+                <textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="35" y="0" width="140" height="22"/>
+                <box><pen lineWidth="0.5"/></box>
+                <textElement verticalAlignment="Middle"><font fontName="SansSerif"/></textElement>
+                <textFieldExpression><![CDATA[" " + $F{waktu}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="175" y="0" width="240" height="22"/>
+                <box><pen lineWidth="0.5"/></box>
+                <textElement verticalAlignment="Middle"><font fontName="SansSerif"/></textElement>
+                <textFieldExpression><![CDATA[" " + $F{namaBeras}]]></textFieldExpression>
+            </textField>
+            <textField pattern="#,##0">
+                <reportElement x="415" y="0" width="140" height="22"/>
+                <box><pen lineWidth="0.5"/></box>
+                <textElement textAlignment="Right" verticalAlignment="Middle"><font fontName="SansSerif"/></textElement>
+                <textFieldExpression><![CDATA[$F{jumlah}]]></textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+
+    <pageFooter>
+        <band height="20">
+            <textField>
+                <reportElement x="0" y="0" width="555" height="20"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle">
+                    <font fontName="SansSerif" size="9"/>
+                </textElement>
+                <textFieldExpression><![CDATA["Halaman " + $V{PAGE_NUMBER}]]></textFieldExpression>
+            </textField>
+        </band>
+    </pageFooter>
+
+    <summary>
+        <band height="32">
+            <staticText>
+                <reportElement x="0" y="8" width="415" height="22"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle">
+                    <font fontName="SansSerif" isBold="true"/>
+                </textElement>
+                <text><![CDATA[TOTAL ]]></text>
+            </staticText>
+            <textField pattern="#,##0">
+                <reportElement x="415" y="8" width="140" height="22"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle">
+                    <font fontName="SansSerif" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$V{totalJumlah}]]></textFieldExpression>
+            </textField>
+        </band>
+    </summary>
+
+    <noData>
+        <band height="80">
+            <textField>
+                <reportElement x="0" y="0" width="555" height="30"/>
+                <textElement textAlignment="Center">
+                    <font fontName="SansSerif" size="18" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{JUDUL}]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement x="0" y="40" width="555" height="25"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font fontName="SansSerif" size="12"/>
+                </textElement>
+                <text><![CDATA[Belum ada data transaksi.]]></text>
+            </staticText>
+        </band>
+    </noData>
+</jasperReport>

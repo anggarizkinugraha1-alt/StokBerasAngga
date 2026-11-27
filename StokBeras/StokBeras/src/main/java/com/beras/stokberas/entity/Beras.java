@@ -63,6 +63,11 @@ public class Beras {
         this.stok = stok;
     }
 
+    /** Nilai stok (harga x stok). Hanya untuk laporan, tidak disimpan ke database. */
+    public long getNilai() {
+        return harga * stok;
+    }
+
     @Override
     public String toString() {
         return nama + " (stok " + stok + " kg)";

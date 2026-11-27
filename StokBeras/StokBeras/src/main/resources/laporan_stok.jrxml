@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="laporan_stok" pageWidth="595" pageHeight="842" columnWidth="555"
+              leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20"
+              whenNoDataType="NoDataSection">
+
+    <!-- Nama field = property di class Beras (getNama, getHarga, getStok, getNilai) -->
+    <field name="nama" class="java.lang.String"/>
+    <field name="harga" class="java.lang.Long"/>
+    <field name="stok" class="java.lang.Integer"/>
+    <field name="nilai" class="java.lang.Long"/>
+
+    <variable name="totalStok" class="java.lang.Integer" calculation="Sum">
+        <variableExpression><![CDATA[$F{stok}]]></variableExpression>
+    </variable>
+    <variable name="totalNilai" class="java.lang.Long" calculation="Sum">
+        <variableExpression><![CDATA[$F{nilai}]]></variableExpression>
+    </variable>
+
+    <title>
+        <band height="60">
+            <staticText>
+                <reportElement x="0" y="0" width="555" height="30"/>
+                <textElement textAlignment="Center">
+                    <font fontName="SansSerif" size="18" isBold="true"/>
+                </textElement>
+                <text><![CDATA[LAPORAN STOK BERAS]]></text>
+            </staticText>
+            <textField pattern="dd MMMM yyyy, HH:mm">
+                <reportElement x="0" y="32" width="555" height="18"/>
+                <textElement textAlignment="Center">
+                    <font fontName="SansSerif" size="10"/>
+                </textElement>
+                <textFieldExpression><![CDATA["Dicetak: " + new java.text.SimpleDateFormat("dd MMMM yyyy, HH:mm").format(new java.util.Date())]]></textFieldExpression>
+            </textField>
+        </band>
+    </title>
+
+    <columnHeader>
+        <band height="25">
+            <staticText>
+                <reportElement x="0" y="0" width="35" height="25"/>
+                <box><pen lineWidth="0.5"/></box>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font fontName="SansSerif" isBold="true"/>
+                </textElement>
+                <text><![CDATA[No]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="35" y="0" width="185" height="25"/>
+                <box><pen lineWidth="0.5"/></box>
+                <textElement verticalAlignment="Middle">
+                    <font fontName="SansSerif" isBold="true"/>
+                </textElement>
+                <text><![CDATA[ Nama Beras]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="220" y="0" width="110" height="25"/>
+                <box><pen lineWidth="0.5"/></box>
+                <textElement textAlignment="Right" verticalAlignment="Middle">
+                    <font fontName="SansSerif" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Harga/kg (Rp) ]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="330" y="0" width="90" height="25"/>
+                <box><pen lineWidth="0.5"/></box>
+                <textElement textAlignment="Right" verticalAlignment="Middle">
+                    <font fontName="SansSerif" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Stok (kg) ]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="420" y="0" width="135" height="25"/>
+                <box><pen lineWidth="0.5"/></box>
+                <textElement textAlignment="Right" verticalAlignment="Middle">
+                    <font fontName="SansSerif" isBold="true"/>
+                </textElement>
+                <text><![CDATA[Nilai Stok (Rp) ]]></text>
+            </staticText>
+        </band>
+    </columnHeader>
+
+    <detail>
+        <band height="22">
+            <textField>
+                <reportElement x="0" y="0" width="35" height="22"/>
+                <box><pen lineWidth="0.5"/></box>
+                <textElement textAlignment="Center" verticalAlignment="Middle"><font fontName="SansSerif"/></textElement>
+                <textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="35" y="0" width="185" height="22"/>
+                <box><pen lineWidth="0.5"/></box>
+                <textElement verticalAlignment="Middle"><font fontName="SansSerif"/></textElement>
+                <textFieldExpression><![CDATA[" " + $F{nama}]]></textFieldExpression>
+            </textField>
+            <textField pattern="#,##0">
+                <reportElement x="220" y="0" width="110" height="22"/>
+                <box><pen lineWidth="0.5"/></box>
+                <textElement textAlignment="Right" verticalAlignment="Middle"><font fontName="SansSerif"/></textElement>
+                <textFieldExpression><![CDATA[$F{harga}]]></textFieldExpression>
+            </textField>
+            <textField pattern="#,##0">
+                <reportElement x="330" y="0" width="90" height="22"/>
+                <box><pen lineWidth="0.5"/></box>
+                <textElement textAlignment="Right" verticalAlignment="Middle"><font fontName="SansSerif"/></textElement>
+                <textFieldExpression><![CDATA[$F{stok}]]></textFieldExpression>
+            </textField>
+            <textField pattern="#,##0">
+                <reportElement x="420" y="0" width="135" height="22"/>
+                <box><pen lineWidth="0.5"/></box>
+                <textElement textAlignment="Right" verticalAlignment="Middle"><font fontName="SansSerif"/></textElement>
+                <textFieldExpression><![CDATA[$F{nilai}]]></textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+
+    <pageFooter>
+        <band height="20">
+            <textField>
+                <reportElement x="0" y="0" width="555" height="20"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle">
+                    <font fontName="SansSerif" size="9"/>
+                </textElement>
+                <textFieldExpression><![CDATA["Halaman " + $V{PAGE_NUMBER}]]></textFieldExpression>
+            </textField>
+        </band>
+    </pageFooter>
+
+    <summary>
+        <band height="32">
+            <staticText>
+                <reportElement x="0" y="8" width="330" height="22"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle">
+                    <font fontName="SansSerif" isBold="true"/>
+                </textElement>
+                <text><![CDATA[TOTAL ]]></text>
+            </staticText>
+            <textField pattern="#,##0">
+                <reportElement x="330" y="8" width="90" height="22"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle">
+                    <font fontName="SansSerif" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$V{totalStok}]]></textFieldExpression>
+            </textField>
+            <textField pattern="#,##0">
+                <reportElement x="420" y="8" width="135" height="22"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle">
+                    <font fontName="SansSerif" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$V{totalNilai}]]></textFieldExpression>
+            </textField>
+        </band>
+    </summary>
+
+    <!-- Tampil jika tidak ada data, sehingga hasil cetak tidak pernah kosong -->
+    <noData>
+        <band height="80">
+            <staticText>
+                <reportElement x="0" y="0" width="555" height="30"/>
+                <textElement textAlignment="Center">
+                    <font fontName="SansSerif" size="18" isBold="true"/>
+                </textElement>
+                <text><![CDATA[LAPORAN STOK BERAS]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="0" y="40" width="555" height="25"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font fontName="SansSerif" size="12"/>
+                </textElement>
+                <text><![CDATA[Belum ada data beras. Tambahkan data di tab Data Beras terlebih dahulu.]]></text>
+            </staticText>
+        </band>
+    </noData>
+</jasperReport>
